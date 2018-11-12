@@ -17,8 +17,13 @@ PrimeChecker.prototype.isPrime = function (number) {
 };
 
 PrimeChecker.prototype.bindEvents = function () {
-  // PubSub.subscribe();
+  PubSub.subscribe('FormView:number-submitted', (event) => {
+    const inputtedNumber = event.detail;
+    const result = this.isPrime(inputtedNumber);
+    // console.log('PrimeChecker result', result);
+
+    PubSub.publish('PrimeChecker:result-calculated', result);
+  });
 };
 
-
-module.exports = PubSub;
+module.exports = PrimeChecker;
